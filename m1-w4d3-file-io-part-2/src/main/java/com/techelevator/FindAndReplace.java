@@ -32,13 +32,10 @@ public class FindAndReplace {
 					}
 					writer.println(line);
 				}
-				
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 	
 	private static File getInputFileFromUser() {
