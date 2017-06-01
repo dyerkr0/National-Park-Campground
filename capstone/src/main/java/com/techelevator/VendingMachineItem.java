@@ -4,11 +4,13 @@ public class VendingMachineItem {
 	private String slotId;
 	private String name;
 	private DollarAmount price;
+	private int quantity;
 	
 	public VendingMachineItem(String slotId, String name, DollarAmount price) {
 		this.slotId = slotId;
 		this.name = name;
 		this.price = price;
+		quantity = 5;
 	}
 	
 	public String getSlotId() {

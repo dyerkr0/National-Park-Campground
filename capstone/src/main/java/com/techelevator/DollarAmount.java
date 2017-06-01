@@ -78,7 +78,9 @@ public static final DollarAmount ZERO_DOLLARS = new DollarAmount(0);
     	return "$" + getDollars() + "." + getCents();
     }
     
-}
-
-
+    public static DollarAmount parseDollarAmount(String value) {
+    	String[] parts = value.split("\\.");
+    	int pennies = Integer.parseInt(parts[0]) * 100 + Integer.parseInt(parts[1]);
+    	return new DollarAmount(pennies);
+    }
 }
