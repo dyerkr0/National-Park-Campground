@@ -10,7 +10,7 @@ public class VendingMachineItem {
 		this.slotId = slotId;
 		this.name = name;
 		this.price = price;
-		quantity = 5;
+		this.quantity = 5;
 	}
 	
 	public String getSlotId() {
@@ -30,6 +30,12 @@ public class VendingMachineItem {
 	}
 	public void setPrice(DollarAmount price) {
 		this.price = price;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public int getQuantity() {
+		return quantity;
 	}
 	
 

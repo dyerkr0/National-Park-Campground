@@ -3,13 +3,15 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class VendingMachineFileInput {
-	public List<VendingMachineItem> getItems() {
-		List<VendingMachineItem> goods = new ArrayList<VendingMachineItem>();
-
+public class VendingMachine {
+	public Map<String, VendingMachineItem> contents = new LinkedHashMap<String, VendingMachineItem>();
+	
+	public VendingMachine() {
 		File inventory = new File("vendingmachine.csv");
 		try(Scanner goodsScanner = new Scanner(inventory)) {
 			while(goodsScanner.hasNextLine()) {
@@ -18,13 +20,15 @@ public class VendingMachineFileInput {
 				String slotId = storage[0];
 				String name = storage[1];
 				DollarAmount price = DollarAmount.parseDollarAmount(storage[2]);
-				goods.add(new VendingMachineItem(slotId, name, price));
+				contents.put(slotId, new VendingMachineItem(slotId, name, price));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		return goods;
 	}
+	
+	public Map<String, VendingMachineItem> getContents() {
+		return contents;
+	}
+	
 }
-
