@@ -18,6 +18,6 @@ public class VendingMachineTest {
 	@Test
 	public void get_contents_works_as_intended() {
 		Assert.assertEquals("Potato Crisps", myVendingMachine.getContents().get("A1").getName());
-	}
+	}	
 
 }
