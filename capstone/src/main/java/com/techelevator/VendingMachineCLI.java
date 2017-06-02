@@ -24,11 +24,7 @@ public class VendingMachineCLI {
 	private VendingMachine myVendingMachine;
 	private DollarAmount currentMoney = new DollarAmount(0);
 	private DollarAmount moneyIn = new DollarAmount(0);
-	private String keyCheck = "[A-D][1-4]";
 	private List<String> consume = new ArrayList<String>();
-	private int quarterCount = 0;
-	private int dimeCount = 0;
-	private int nickelCount = 0;
 	private LogFile myLogFile = new LogFile();
 
 	public VendingMachineCLI(Menu menu) {
@@ -63,15 +59,10 @@ public class VendingMachineCLI {
 	private void displayItems() {
 		Map<String, VendingMachineItem> myItemList = myVendingMachine.getContents();
 		for (String itemTrait : myItemList.keySet()) { 
-			System.out.printf("%-5s%-20s%-8s", myItemList.get(itemTrait).getSlotId(), myItemList.get(itemTrait).getName(), myItemList.get(itemTrait).getPrice());
-			if (myItemList.get(itemTrait).getQuantity() == 0) {
-				System.out.printf("%-10s", "SOLD OUT");
-			} else {
-				System.out.printf("-%10s", myItemList.get(itemTrait).getQuantity());
-			}
-			System.out.println(" ");
-			System.out.println(" ");
+			System.out.println(myItemList.get(itemTrait));
 		}
+		System.out.println(" ");
+		System.out.println(" ");
 		System.out.println("Current money: " + currentMoney);
 	}
 	
@@ -87,6 +78,7 @@ public class VendingMachineCLI {
 	}
 
 	private void selectProduct() {
+		String keyCheck = "[A-D][1-4]";
 		System.out.println("Please enter the Slot ID of your desired item.");
 		Scanner userChoice = new Scanner(System.in);
 		String userBuy = userChoice.nextLine();
@@ -114,6 +106,9 @@ public class VendingMachineCLI {
 
 	private void makeChange() { //Make class
 		System.out.println("You did not spend " + currentMoney.toString() + ".");
+		int quarterCount = 0;
+		int dimeCount = 0;
+		int nickelCount = 0;
 		int makeChange = currentMoney.hashCode();
 		while (makeChange > 0) {
 			while (makeChange - 25 >= 0) {

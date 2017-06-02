@@ -38,5 +38,16 @@ public class VendingMachineItem {
 		return quantity;
 	}
 	
+	@Override
+	public String toString() {
+		String result = String.format("%-5s%-20s%-8s", slotId, name, price);
+		if (quantity == 0) {
+			result += String.format("%-10s", "SOLD OUT");
+		} else {
+			result += String.format("%-10s", quantity);
+		}
+		
+		return result;
+	}
 
 }
