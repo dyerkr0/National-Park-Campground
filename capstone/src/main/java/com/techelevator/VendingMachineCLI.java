@@ -71,11 +71,15 @@ public class VendingMachineCLI {
 		System.out.println("Please insert money – this machine accepts the following denominations:");
 		System.out.println("**** $1, $2, $5, $10 ****");
 		Scanner userAdd = new Scanner(System.in);
-//		if(userAdd.equals(1)) { //if/else until 10, the else/invalid
-		DollarAmount feedMoney = new DollarAmount(userAdd.nextInt() * 100);
-		currentMoney = currentMoney.plus(feedMoney);
-		System.out.println("Current money: " + currentMoney);
-		myLogFile.log(" FEED MONEY " + moneyIn + " " + currentMoney);
+		int userInput = userAdd.nextInt();
+		if(userInput == 1 || userInput == 2 || userInput == 5 || userInput == 10) {
+			DollarAmount feedMoney = new DollarAmount(userAdd.nextInt() * 100);
+			currentMoney = currentMoney.plus(feedMoney);
+			System.out.println("Current money: " + currentMoney);
+			myLogFile.log(" FEED MONEY " + moneyIn + " " + currentMoney);
+		} else {
+			System.out.println("Invalid currency amount. Please try again.");
+		}
 	}
 
 	private void selectProduct() {
