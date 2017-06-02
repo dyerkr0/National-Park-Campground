@@ -30,7 +30,6 @@ public class VendingMachineCLI {
 	private int dimeCount = 0;
 	private int nickelCount = 0;
 	private LogFile myLogFile = new LogFile();
-	private SalesReport mySales = new SalesReport();
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -53,7 +52,7 @@ public class VendingMachineCLI {
 					} else if (choice2.equals(SUB_MENU_OPTION_FINISH_TRANSACTION)) {
 						makeChange();
 						enjoyPurchase();
-						soldItems();
+						myVendingMachine.soldItems();
 						break;
 					}
 				}
@@ -64,13 +63,11 @@ public class VendingMachineCLI {
 	private void displayItems() {
 		Map<String, VendingMachineItem> myItemList = myVendingMachine.getContents();
 		for (String itemTrait : myItemList.keySet()) { 
-			System.out.print(myItemList.get(itemTrait).getSlotId() + " ");
-			System.out.print(myItemList.get(itemTrait).getName() + " ");
-			System.out.print(myItemList.get(itemTrait).getPrice() + " ");
+			System.out.printf("%-5s%-20s%-8s", myItemList.get(itemTrait).getSlotId(), myItemList.get(itemTrait).getName(), myItemList.get(itemTrait).getPrice());
 			if (myItemList.get(itemTrait).getQuantity() == 0) {
-				System.out.print("SOLD OUT");
+				System.out.printf("%-10s", "SOLD OUT");
 			} else {
-				System.out.print(myItemList.get(itemTrait).getQuantity());
+				System.out.printf("-%10s", myItemList.get(itemTrait).getQuantity());
 			}
 			System.out.println(" ");
 			System.out.println(" ");
@@ -78,26 +75,6 @@ public class VendingMachineCLI {
 		System.out.println("Current money: " + currentMoney);
 	}
 	
-	private void soldItems() { //Move to VendingMachine as public class
-		Map<String, VendingMachineItem> soldItemList = myVendingMachine.getContents();
-		List<String> reportList = new ArrayList<String>();
-		DollarAmount totalSales = new DollarAmount(0);
-		for (String itemTrait : soldItemList.keySet()) { 
-			reportList.add(soldItemList.get(itemTrait).getName() + "|" + (5 - soldItemList.get(itemTrait).getQuantity()));
-			}
-		mySales.report(reportList);
-		
-		for (String itemsSold : soldItemList.keySet()) {
-			int quantitySold = 5 - soldItemList.get(itemsSold).getQuantity();
-			if(quantitySold > 0) {
-				totalSales = totalSales.plus(soldItemList.get(itemsSold).getPrice().times(quantitySold));
-			}
-		}
-		
-		mySales.totalAmount(totalSales.toString());
-		
-	}
-
 	private void feedMoney() {
 		moneyIn = currentMoney;
 		System.out.println("Please insert money – this machine accepts the following denominations:");

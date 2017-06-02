@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachine {
-	public Map<String, VendingMachineItem> contents = new LinkedHashMap<String, VendingMachineItem>();
+	private SalesReport mySales = new SalesReport();
+	
+	private Map<String, VendingMachineItem> contents = new LinkedHashMap<String, VendingMachineItem>();
 	
 	public VendingMachine() {
 		File inventory = new File("vendingmachine.csv");
@@ -29,6 +31,26 @@ public class VendingMachine {
 	
 	public Map<String, VendingMachineItem> getContents() {
 		return contents;
+	}
+	
+	public void soldItems() {
+		Map<String, VendingMachineItem> soldItemList = getContents();
+		List<String> reportList = new ArrayList<String>();
+		DollarAmount totalSales = new DollarAmount(0);
+		for (String itemTrait : soldItemList.keySet()) { 
+			reportList.add(soldItemList.get(itemTrait).getName() + "|" + (5 - soldItemList.get(itemTrait).getQuantity()));
+			}
+		mySales.report(reportList);
+		
+		for (String itemsSold : soldItemList.keySet()) {
+			int quantitySold = 5 - soldItemList.get(itemsSold).getQuantity();
+			if(quantitySold > 0) {
+				totalSales = totalSales.plus(soldItemList.get(itemsSold).getPrice().times(quantitySold));
+			}
+		}
+		
+		mySales.totalAmount(totalSales.toString());
+		
 	}
 	
 }
