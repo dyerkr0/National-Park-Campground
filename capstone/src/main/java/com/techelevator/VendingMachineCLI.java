@@ -84,7 +84,7 @@ public class VendingMachineCLI {
 		DollarAmount feedMoney = new DollarAmount(userAdd.nextInt() * 100);
 		currentMoney = currentMoney.plus(feedMoney);
 		System.out.println("Current money: " + currentMoney);
-		myLogFile.log("FEED MONEY" + moneyIn + " " + currentMoney);
+		myLogFile.log(" FEED MONEY " + moneyIn + " " + currentMoney);
 	}
 
 	private void selectProduct() {
@@ -98,19 +98,20 @@ public class VendingMachineCLI {
 			// Are there still things to be sold?
 			if (myVendingMachine.getContents().get(userBuy).getQuantity() == 0) {
 				System.out.println("That item is SOLD OUT. Please make another selection.");
+				System.out.println("Current money: " + currentMoney);
 			}
 			// Is there enough money to buy it?
 			DollarAmount thisPurchase = myVendingMachine.getContents().get(userBuy).getPrice();
 			if (thisPurchase.isGreaterThan(currentMoney)) {
 				System.out.println("You must insert more money to make this purchase.");
-			} else {
+			} else if(!thisPurchase.isGreaterThan(currentMoney) && myVendingMachine.getContents().get(userBuy).getQuantity() != 0) {
 				moneyIn = currentMoney;
 				currentMoney = currentMoney.minus(thisPurchase);
 				consume.add(userBuy);
 				int buyout = myVendingMachine.getContents().get(userBuy).getQuantity();
 				myVendingMachine.getContents().get(userBuy).setQuantity(buyout - 1);
 				System.out.println("Current money: " + currentMoney);
-				myLogFile.log(myVendingMachine.getContents().get(userBuy).getName() + myVendingMachine.getContents().get(userBuy).getSlotId() + moneyIn + " " + currentMoney);
+				myLogFile.log(" " + myVendingMachine.getContents().get(userBuy).getName() + " " + myVendingMachine.getContents().get(userBuy).getSlotId() + " " + moneyIn + " " + currentMoney);
 			}
 		}
 	}
@@ -136,7 +137,7 @@ public class VendingMachineCLI {
 		currentMoney = currentMoney.minus(currentMoney);
 		System.out.println("You got " + quarterCount + " quarters, " + dimeCount + " dimes, and " + nickelCount
 				+ " nickels back in change.");
-		myLogFile.log("GIVE CHANGE" + moneyIn + " " + currentMoney);
+		myLogFile.log(" GIVE CHANGE " + moneyIn + " " + currentMoney);
 	}
 
 	private void enjoyPurchase() {

@@ -23,5 +23,6 @@ public class LogFile {
 	public void log(String message) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm:ss a");
 		writer.println(now.format(format) + message);
+		writer.flush();
 	}
 }
