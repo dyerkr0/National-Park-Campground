@@ -174,5 +174,6 @@ public class VendingMachineCLI {
 				System.out.println("Chew Chew, Yum!");
 			}
 		}
+		consume.removeAll(consume);
 	}
 }

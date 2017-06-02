@@ -23,7 +23,9 @@ public class SalesReport {
 	}
 	
 	public void totalAmount(String message) {
+		writer.println(" ");
 		writer.println("TOTAL SALES: " + message);
+		writer.println(" ");
 		writer.flush();
 	}
 
