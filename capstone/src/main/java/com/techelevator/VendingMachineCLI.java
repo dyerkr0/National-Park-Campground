@@ -78,11 +78,10 @@ public class VendingMachineCLI {
 		System.out.println("Current money: " + currentMoney);
 	}
 	
-	private void soldItems() {
+	private void soldItems() { //Move to VendingMachine as public class
 		Map<String, VendingMachineItem> soldItemList = myVendingMachine.getContents();
 		List<String> reportList = new ArrayList<String>();
 		DollarAmount totalSales = new DollarAmount(0);
-		int totalSold = 0;
 		for (String itemTrait : soldItemList.keySet()) { 
 			reportList.add(soldItemList.get(itemTrait).getName() + "|" + (5 - soldItemList.get(itemTrait).getQuantity()));
 			}
@@ -101,7 +100,7 @@ public class VendingMachineCLI {
 
 	private void feedMoney() {
 		moneyIn = currentMoney;
-		System.out.println("Please insert money – this machine accepts the following demoninations:");
+		System.out.println("Please insert money – this machine accepts the following denominations:");
 		System.out.println("**** $1, $2, $5, $10 ****");
 		Scanner userAdd = new Scanner(System.in);
 		DollarAmount feedMoney = new DollarAmount(userAdd.nextInt() * 100);
@@ -114,16 +113,13 @@ public class VendingMachineCLI {
 		System.out.println("Please enter the Slot ID of your desired item.");
 		Scanner userChoice = new Scanner(System.in);
 		String userBuy = userChoice.nextLine();
-		// Is it a valid key?
 		if (!Pattern.matches(keyCheck, userBuy)) {
 			System.out.println("Invalid selection. Please try again.");
 		} else {
-			// Are there still things to be sold?
 			if (myVendingMachine.getContents().get(userBuy).getQuantity() == 0) {
 				System.out.println("That item is SOLD OUT. Please make another selection.");
 				System.out.println("Current money: " + currentMoney);
 			}
-			// Is there enough money to buy it?
 			DollarAmount thisPurchase = myVendingMachine.getContents().get(userBuy).getPrice();
 			if (thisPurchase.isGreaterThan(currentMoney)) {
 				System.out.println("You must insert more money to make this purchase.");
@@ -139,7 +135,7 @@ public class VendingMachineCLI {
 		}
 	}
 
-	private void makeChange() {
+	private void makeChange() { //Make class
 		System.out.println("You did not spend " + currentMoney.toString() + ".");
 		int makeChange = currentMoney.hashCode();
 		while (makeChange > 0) {
