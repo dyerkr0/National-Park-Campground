@@ -26,6 +26,7 @@ public class VendingMachineCLI {
 	private DollarAmount moneyIn = new DollarAmount(0);
 	private List<String> consume = new ArrayList<String>();
 	private LogFile myLogFile = new LogFile();
+	private GiveChange giveChange = new GiveChange();
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -46,7 +47,9 @@ public class VendingMachineCLI {
 					} else if (choice2.equals(SUB_MENU_OPTION_SELECT_PRODUCT)) {
 						selectProduct();
 					} else if (choice2.equals(SUB_MENU_OPTION_FINISH_TRANSACTION)) {
-						makeChange();
+						giveChange.dispenseChange(currentMoney);
+						myLogFile.log(" GIVE CHANGE " + currentMoney + " $0.00");
+						currentMoney = new DollarAmount(0);
 						enjoyPurchase();
 						myVendingMachine.soldItems();
 						break;
@@ -57,10 +60,7 @@ public class VendingMachineCLI {
 	}
 
 	private void displayItems() {
-		Map<String, VendingMachineItem> myItemList = myVendingMachine.getContents();
-		for (String itemTrait : myItemList.keySet()) { 
-			System.out.println(myItemList.get(itemTrait));
-		}
+		myVendingMachine.showInventory();
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("Current money: " + currentMoney);
@@ -71,6 +71,7 @@ public class VendingMachineCLI {
 		System.out.println("Please insert money – this machine accepts the following denominations:");
 		System.out.println("**** $1, $2, $5, $10 ****");
 		Scanner userAdd = new Scanner(System.in);
+//		if(userAdd.equals(1)) { //if/else until 10, the else/invalid
 		DollarAmount feedMoney = new DollarAmount(userAdd.nextInt() * 100);
 		currentMoney = currentMoney.plus(feedMoney);
 		System.out.println("Current money: " + currentMoney);
@@ -102,33 +103,6 @@ public class VendingMachineCLI {
 				myLogFile.log(" " + myVendingMachine.getContents().get(userBuy).getName() + " " + myVendingMachine.getContents().get(userBuy).getSlotId() + " " + moneyIn + " " + currentMoney);
 			}
 		}
-	}
-
-	private void makeChange() { //Make class
-		System.out.println("You did not spend " + currentMoney.toString() + ".");
-		int quarterCount = 0;
-		int dimeCount = 0;
-		int nickelCount = 0;
-		int makeChange = currentMoney.hashCode();
-		while (makeChange > 0) {
-			while (makeChange - 25 >= 0) {
-				quarterCount++;
-				makeChange = makeChange - 25;
-			}
-			while (makeChange - 10 >= 0) {
-				dimeCount++;
-				makeChange = makeChange - 10;
-			}
-			while (makeChange - 5 >= 0) {
-				nickelCount++;
-				makeChange = makeChange - 5;
-			}
-		}
-		moneyIn = currentMoney;
-		currentMoney = currentMoney.minus(currentMoney);
-		System.out.println("You got " + quarterCount + " quarters, " + dimeCount + " dimes, and " + nickelCount
-				+ " nickels back in change.");
-		myLogFile.log(" GIVE CHANGE " + moneyIn + " " + currentMoney);
 	}
 
 	private void enjoyPurchase() {

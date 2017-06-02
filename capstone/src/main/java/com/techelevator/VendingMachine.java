@@ -33,6 +33,13 @@ public class VendingMachine {
 		return contents;
 	}
 	
+	public void showInventory() {
+		Map<String, VendingMachineItem> myItemList = getContents();
+		for (String itemTrait : myItemList.keySet()) { 
+			System.out.println(myItemList.get(itemTrait));
+		}
+	}
+	
 	public void soldItems() {
 		Map<String, VendingMachineItem> soldItemList = getContents();
 		List<String> reportList = new ArrayList<String>();
