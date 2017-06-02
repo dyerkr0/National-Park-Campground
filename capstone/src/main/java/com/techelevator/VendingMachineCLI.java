@@ -30,6 +30,7 @@ public class VendingMachineCLI {
 	private int dimeCount = 0;
 	private int nickelCount = 0;
 	private LogFile myLogFile = new LogFile();
+	private SalesReport mySales = new SalesReport();
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -52,6 +53,7 @@ public class VendingMachineCLI {
 					} else if (choice2.equals(SUB_MENU_OPTION_FINISH_TRANSACTION)) {
 						makeChange();
 						enjoyPurchase();
+						soldItems();
 						break;
 					}
 				}
@@ -74,6 +76,27 @@ public class VendingMachineCLI {
 			System.out.println(" ");
 		}
 		System.out.println("Current money: " + currentMoney);
+	}
+	
+	private void soldItems() {
+		Map<String, VendingMachineItem> soldItemList = myVendingMachine.getContents();
+		List<String> reportList = new ArrayList<String>();
+		DollarAmount totalSales = new DollarAmount(0);
+		int totalSold = 0;
+		for (String itemTrait : soldItemList.keySet()) { 
+			reportList.add(soldItemList.get(itemTrait).getName() + "|" + (5 - soldItemList.get(itemTrait).getQuantity()));
+			}
+		mySales.report(reportList);
+		
+		for (String itemsSold : soldItemList.keySet()) {
+			int quantitySold = 5 - soldItemList.get(itemsSold).getQuantity();
+			if(quantitySold > 0) {
+				totalSales = totalSales.plus(soldItemList.get(itemsSold).getPrice().times(quantitySold));
+			}
+		}
+		
+		mySales.totalAmount(totalSales.toString());
+		
 	}
 
 	private void feedMoney() {

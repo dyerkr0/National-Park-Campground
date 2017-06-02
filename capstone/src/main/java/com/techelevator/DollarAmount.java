@@ -47,6 +47,10 @@ public static final DollarAmount ZERO_DOLLARS = new DollarAmount(0);
     public DollarAmount plus(DollarAmount amountToAdd) {
         return new DollarAmount(this.totalAmountInCents + amountToAdd.totalAmountInCents);
     }
+    
+    public DollarAmount times(int amountToMulitply) {
+    	return new DollarAmount(this.totalAmountInCents * amountToMulitply);
+    }
 
     public int compareTo(DollarAmount amountToCompare) {
         if(this.isGreaterThan(amountToCompare)) {
