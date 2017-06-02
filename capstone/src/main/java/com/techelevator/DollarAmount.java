@@ -75,7 +75,7 @@ public static final DollarAmount ZERO_DOLLARS = new DollarAmount(0);
 //    new DollarAmount(3210).toString() new DollarAmount(1000).toString() → “$10.00” new DollarAmount(1).toString() → “$0.01”
     @Override
     public String toString() {
-    	return "$" + getDollars() + "." + getCents();
+    	return "$" + getDollars() + "." + String.format("%02d", getCents());
     }
     
     public static DollarAmount parseDollarAmount(String value) {
