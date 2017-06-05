@@ -68,12 +68,13 @@ public class VendingMachineCLI {
 	
 	private void feedMoney() {
 		moneyIn = currentMoney;
+		DollarAmount feedMoney = new DollarAmount(0);
 		System.out.println("Please insert money – this machine accepts the following denominations:");
 		System.out.println("**** $1, $2, $5, $10 ****");
 		Scanner userAdd = new Scanner(System.in);
 		int userInput = userAdd.nextInt();
 		if(userInput == 1 || userInput == 2 || userInput == 5 || userInput == 10) {
-			DollarAmount feedMoney = new DollarAmount(userAdd.nextInt() * 100);
+			feedMoney = new DollarAmount(userInput * 100);
 			currentMoney = currentMoney.plus(feedMoney);
 			System.out.println("Current money: " + currentMoney);
 			myLogFile.log(" FEED MONEY " + moneyIn + " " + currentMoney);
