@@ -1,4 +1,4 @@
-# Week4-Pairs Capstone VendingMachine pair project
+Capstone VendingMachine pair project
 Module 1 Capstone - Vending Machine Software You’ve been asked to develop an application for the newest vending machine distributor, Umbrella Corp. They’ve released a new vending machine (Vendo-Matic 500) that is integrated with everyone’s bank accounts allowing customers to purchase products right from their computers for convenience sake. The requirements for the application are listed below:
 
 The vending machine needs to dispense beverages, candy, chips, and gum. a. Each vending machine item has a Name and a Price.
